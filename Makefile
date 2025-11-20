@@ -22,7 +22,7 @@ TARGET = STM32U5G9J-DK2-ThreadX
 # debug build?
 DEBUG = 1
 # optimization
-OPT = -Og
+OPT = -O3
 
 
 #######################################
@@ -36,6 +36,8 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+$(shell find lvgl -not \( -path lvgl/tests -prune \) -not \( -path lvgl/examples -prune \) -name '*.c') \
+Core/Src/lvgl_port.c \
 Core/Src/main.c \
 Core/Src/stm32u5xx_it.c \
 Core/Src/stm32u5xx_hal_msp.c \
@@ -91,13 +93,13 @@ PREFIX = arm-none-eabi-
 # The gcc compiler bin path can be either defined in make command via GCC_PATH variable (> make GCC_PATH=xxx)
 # either it can be added to the PATH environment variable.
 ifdef GCC_PATH
-CC = $(GCC_PATH)/$(PREFIX)gcc
-AS = $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
+CC = ccache $(GCC_PATH)/$(PREFIX)gcc
+AS = ccache $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
 CP = $(GCC_PATH)/$(PREFIX)objcopy
 SZ = $(GCC_PATH)/$(PREFIX)size
 else
-CC = $(PREFIX)gcc
-AS = $(PREFIX)gcc -x assembler-with-cpp
+CC = ccache $(PREFIX)gcc
+AS = ccache $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
 SZ = $(PREFIX)size
 endif
@@ -134,6 +136,8 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
+-I. \
+-Ilvgl/libs/nema_gfx/include \
 -ICore/Inc \
 -IDrivers/STM32U5xx_HAL_Driver/Inc \
 -IDrivers/STM32U5xx_HAL_Driver/Inc/Legacy \
@@ -162,8 +166,8 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 LDSCRIPT = STM32U5g9xx_FLASH.ld
 
 # libraries
-LIBS = -lc -lm -lnosys 
-LIBDIR = 
+LIBS = -lnemagfx-float-abi-hard -lc -lm -lnosys
+LIBDIR = -Llvgl/libs/nema_gfx/lib/core/cortex_m33_NemaPVG/gcc
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all

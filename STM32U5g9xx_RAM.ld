@@ -39,7 +39,8 @@ ENTRY(Reset_Handler)
 /* Memories definition */
 MEMORY
 {
-  RAM (xrw)   : ORIGIN = 0x20000000, LENGTH = 3008K
+  RAM2	(xrw)	: ORIGIN = 0x20000000, LENGTH = 750K
+  RAM	(xrw)	: ORIGIN = 0x200bb800, LENGTH = 2258K
   SRAM4 (xrw) : ORIGIN = 0x28000000, LENGTH = 16K
 }
 /* Highest address of the user mode stack */
