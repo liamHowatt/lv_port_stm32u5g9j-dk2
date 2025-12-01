@@ -36,7 +36,7 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
-$(shell find lvgl -not \( -path lvgl/tests -prune \) -not \( -path lvgl/examples -prune \) -name '*.c') \
+$(shell find -H lvgl -not \( -path lvgl/tests -prune \) -not \( -path lvgl/examples -prune \) -name '*.c') \
 Core/Src/lvgl_port.c \
 Core/Src/main.c \
 Core/Src/stm32u5xx_it.c \

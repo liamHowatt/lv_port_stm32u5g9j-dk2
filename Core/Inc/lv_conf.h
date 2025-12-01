@@ -229,7 +229,7 @@
 #endif
 
 /*Use TSi's aka (Think Silicon) NemaGFX */
-#define LV_USE_NEMA_GFX 1
+#define LV_USE_NEMA_GFX 0
 
 #if LV_USE_NEMA_GFX
     /** Select which NemaGFX HAL to use. Possible options:
@@ -241,7 +241,7 @@
     #endif
 
     /*Enable Vector Graphics Operations. Available only if NemaVG library is present*/
-    #define LV_USE_NEMA_VG 1
+    #define LV_USE_NEMA_VG 0
     #if LV_USE_NEMA_VG
         /*Define application's resolution used for VG related buffer allocation */
         #define LV_NEMA_GFX_MAX_RESX 800
@@ -369,9 +369,9 @@
 #endif
 
 /** Accelerate blends, fills, etc. with STM32 DMA2D */
-#define LV_USE_DRAW_DMA2D 0
+#define LV_USE_DRAW_DMA2D 1
 #if LV_USE_DRAW_DMA2D
-    #define LV_DRAW_DMA2D_HAL_INCLUDE "stm32h7xx_hal.h"
+    #define LV_DRAW_DMA2D_HAL_INCLUDE "stm32u5xx_hal.h"
 
     /* if enabled, the user is required to call `lv_draw_dma2d_transfer_complete_interrupt_handler`
      * upon receiving the DMA2D global interrupt
@@ -711,7 +711,7 @@
 /*==================
  * WIDGETS
  *================*/
-/* Documentation for widgets can be found here: https://docs.lvgl.io/master/details/widgets/index.html . */
+/* Documentation for widgets can be found here: https://docs.lvgl.io/master/widgets/index.html . */
 
 /** 1: Causes these widgets to be given default values at creation time.
  *  - lv_buttonmatrix_t:  Get default maps:  {"Btn1", "Btn2", "Btn3", "\n", "Btn4", "Btn5", ""}, else map not set.
@@ -819,7 +819,7 @@
 /*==================
  * THEMES
  *==================*/
-/* Documentation for themes can be found here: https://docs.lvgl.io/master/details/common-widget-features/styles/styles.html#themes . */
+/* Documentation for themes can be found here: https://docs.lvgl.io/master/common-widget-features/styles/styles.html#themes . */
 
 /** A simple, impressive and very complete theme */
 #define LV_USE_THEME_DEFAULT 1
@@ -843,7 +843,7 @@
 /*==================
  * LAYOUTS
  *==================*/
-/* Documentation for layouts can be found here: https://docs.lvgl.io/master/details/common-widget-features/layouts/index.html . */
+/* Documentation for layouts can be found here: https://docs.lvgl.io/master/common-widget-features/layouts/index.html . */
 
 /** A layout similar to Flexbox in CSS. */
 #define LV_USE_FLEX 1
@@ -854,13 +854,13 @@
 /*====================
  * 3RD PARTS LIBRARIES
  *====================*/
-/* Documentation for libraries can be found here: https://docs.lvgl.io/master/details/libs/index.html . */
+/* Documentation for libraries can be found here: https://docs.lvgl.io/master/libs/index.html . */
 
 /* File system interfaces for common APIs */
 
 /** Setting a default driver letter allows skipping the driver prefix in filepaths.
  *  Documentation about how to use the below driver-identifier letters can be found at
- *  https://docs.lvgl.io/master/details/main-modules/fs.html#lv-fs-identifier-letters . */
+ *  https://docs.lvgl.io/master/main-modules/fs.html#lv-fs-identifier-letters . */
 #define LV_FS_DEFAULT_DRIVER_LETTER '\0'
 
 /** API for fopen, fread, etc. */
@@ -1002,7 +1002,9 @@
 #define LV_USE_GLTF  0
 
 /** Enable Vector Graphic APIs
- *  Requires `LV_USE_MATRIX = 1` */
+ *  Requires `LV_USE_MATRIX = 1`
+ *  and a rendering engine supporting vector graphics, e.g.
+ *  (LV_USE_DRAW_SW and LV_USE_THORVG) or LV_USE_DRAW_VG_LITE or LV_USE_NEMA_VG. */
 #define LV_USE_VECTOR_GRAPHIC  0
 
 /** Enable ThorVG (vector graphics library) from the src/libs folder.
@@ -1040,7 +1042,7 @@
 /*==================
  * OTHERS
  *==================*/
-/* Documentation for several of the below items can be found here: https://docs.lvgl.io/master/details/auxiliary-modules/index.html . */
+/* Documentation for several of the below items can be found here: https://docs.lvgl.io/master/auxiliary-modules/index.html . */
 
 /** 1: Enable API to take snapshot for object */
 #define LV_USE_SNAPSHOT 0
@@ -1360,7 +1362,7 @@
 #define LV_USE_ST_LTDC    1
 #if LV_USE_ST_LTDC
     /* Only used for partial. */
-    #define LV_ST_LTDC_USE_DMA2D_FLUSH 1
+    #define LV_ST_LTDC_USE_DMA2D_FLUSH 0
 #endif
 
 /** Driver for NXP ELCDIF */
